@@ -1,0 +1,69 @@
+{
+  "name": "PismoPRO - AI + Ekspert: Pisma, Reklamacje, Wnioski",
+  "short_name": "PismoPRO",
+  "description": "Profesjonalne pisma urzędowe, reklamacje i wnioski przygotowywane przez AI i weryfikowane przez ekspertów prawnych.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D1117",
+  "theme_color": "#58A6FF",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "pl",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PismoPRO%20app%20icon%2C%20modern%20minimalist%20design%2C%20blue%20gradient%20background%2C%20white%20document%20symbol%2C%20AI%20circuit%20pattern%2C%20professional%20legal%20service%20branding%2C%20clean%20typography%2C%20square%20format&image_size=square",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PismoPRO%20app%20icon%2C%20modern%20minimalist%20design%2C%20blue%20gradient%20background%2C%20white%20document%20symbol%2C%20AI%20circuit%20pattern%2C%20professional%20legal%20service%20branding%2C%20clean%20typography%2C%20square%20format&image_size=square",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PismoPRO%20website%20screenshot%2C%20modern%20dark%20interface%2C%20hero%20section%20with%20AI%20and%20expert%20collaboration%2C%20pricing%20cards%2C%20Polish%20text%2C%20professional%20legal%20service%20design%2C%20mobile%20responsive&image_size=portrait_16_9",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "PismoPRO - Strona główna"
+    },
+    {
+      "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=PismoPRO%20desktop%20website%20screenshot%2C%20modern%20dark%20interface%2C%20full%20layout%20with%20navigation%2C%20hero%20section%2C%20features%2C%20pricing%20table%2C%20Polish%20legal%20service%20design&image_size=landscape_16_9",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "PismoPRO - Widok desktop"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nowa reklamacja",
+      "short_name": "Reklamacja",
+      "description": "Złóż nową reklamację produktu lub usługi",
+      "url": "/?type=reklamacja",
+      "icons": [
+        {
+          "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Complaint%20document%20icon%2C%20minimalist%20design%2C%20blue%20color%2C%20warning%20symbol%2C%20professional%20style&image_size=square",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Wniosek o dotację",
+      "short_name": "Dotacja",
+      "description": "Przygotuj wniosek o dofinansowanie",
+      "url": "/?type=dotacja",
+      "icons": [
+        {
+          "src": "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=Grant%20application%20icon%2C%20minimalist%20design%2C%20green%20color%2C%20money%20symbol%2C%20professional%20style&image_size=square",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

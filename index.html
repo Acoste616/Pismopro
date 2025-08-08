@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="pl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PismoPRO - Profesjonalne pisma prawne | Szybko, skutecznie, bezpiecznie</title>
+    <meta name="description" content="PismoPRO to platforma do tworzenia profesjonalnych pism prawnych. Szybko, skutecznie i bezpiecznie. Sprawdź nasze pakiety i zamów już dziś!">
+    <meta name="keywords" content="pisma prawne, dokumenty prawne, prawnik online, pisma procesowe, pozew, odwołanie, wniosek, prawo, usługi prawne, dokumenty sądowe">
+    <meta name="author" content="PismoPRO">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pismopro.pl/">
+    <meta property="og:title" content="PismoPRO - Profesjonalne pisma prawne">
+    <meta property="og:description" content="Platforma do tworzenia profesjonalnych pism prawnych. Szybko, skutecznie i bezpiecznie.">
+    <meta property="og:image" content="https://pismopro.pl/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pismopro.pl/">
+    <meta property="twitter:title" content="PismoPRO - Profesjonalne pisma prawne">
+    <meta property="twitter:description" content="Platforma do tworzenia profesjonalnych pism prawnych. Szybko, skutecznie i bezpiecznie.">
+    <meta property="twitter:image" content="https://pismopro.pl/twitter-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pismopro.pl/">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "PismoPRO",
+        "url": "https://pismopro.pl",
+        "logo": "https://pismopro.pl/logo.png",
+        "description": "Profesjonalne pisma prawne online",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+48-123-456-789",
+            "contactType": "customer service",
+            "availableLanguage": "Polish"
+        }
+    }
+    </script>
+    
+    <!-- Performance optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//js.stripe.com">
+    
+    <!-- SEO Keywords -->
+    <meta name="keywords" content="pisma prawne, dokumenty prawne, prawnik online, pisma procesowe, pozew, odwołanie, wniosek, prawo, usługi prawne, dokumenty sądowe, sprawy cywilne, sprawy karne, sprawy administracyjne, pomoc prawna, konsultacje prawne, doradztwo prawne, pisma urzędowe, korespondencja prawna, reprezentacja prawna, obsługa prawna, usługi dla firm, usługi dla osób prywatnych">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, limit } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js';
+        
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            authDomain: "pismopro-xxxxx.firebaseapp.com",
+            projectId: "pismopro-xxxxx",
+            storageBucket: "pismopro-xxxxx.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdefghijklmnop",
+            measurementId: "G-XXXXXXXXXX"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const analytics = getAnalytics(app);
+        
+        // Make Firebase available globally
+        window.firebase = { addDoc, collection, getDocs, query, where, orderBy, limit };
+        window.db = db;
+        window.auth = auth;
+        
+        // Sign in anonymously for basic functionality
+        signInAnonymously(auth).catch(console.error);
+    </script>
+    
+    <style>
+        /* Custom CSS Variables */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #475569;
+            --accent-color: #3b82f6;
+        }
+        
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --accent-color: #3b82f6;
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: var(--primary-gradient);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .scroll-padding {
+            scroll-padding-top: 80px;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body class="scroll-padding">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold gradient-text">
+                        PismoPRO
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-slate-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">
+                            Strona główna
+                        </a>
+                        <a href="#how-it-works" class="text-slate-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">
+                            Jak to działa
+                        </a>
+                        <a href="#pricing" class="text-slate-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">
+                            Cennik
+                        </a>
+                        <a href="#vehicle-cases" class="text-slate-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">
+                            Sprawy pojazdowe
+                        </a>
+                        <a href="#grants" class="text-slate-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">
+                            Dotacje
+                        </a>
+                        <a href="#faq" class="text-slate-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors">
+                            FAQ
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right side buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors">
+                        <svg id="sun-icon" class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="moon-icon" class="w-5 h-5 text-slate-400 hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- CTA Button -->
+                    <a href="#pricing" class="btn-primary text-white px-6 py-2 rounded-lg font-medium shadow-lg">
+                        Zamów teraz
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="md:hidden hidden bg-slate-900 border-t border-slate-800">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="text-slate-300 hover:text-white block px-3 py-2 text-base font-medium transition-colors">
+                    Strona główna
+                </a>
+                <a href="#how-it-works" class="text-slate-300 hover:text-white block px-3 py-2 text-base font-medium transition-colors">
+                    Jak to działa
+                </a>
+                <a href="#pricing" class="text-slate-300 hover:text-white block px-3 py-2 text-base font-medium transition-colors">
+                    Cennik
+                </a>
+                <a href="#vehicle-cases" class="text-slate-300 hover:text-white block px-3 py-2 text-base font-medium transition-colors">
+                    Sprawy pojazdowe
+                </a>
+                <a href="#grants" class="text-slate-300 hover:text-white block px-3 py-2 text-base font-medium transition-colors">
+                    Dotacje
+                </a>
+                <a href="#faq" class="text-slate-300 hover:text-white block px-3 py-2 text-base font-medium transition-colors">
+                    FAQ
+                </a>
+                <div class="pt-4 pb-2">
+                    <a href="#pricing" class="btn-primary text-white block text-center px-6 py-2 rounded-lg font-medium shadow-lg">
+                        Zamów teraz
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-20 pb-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                    Profesjonalne <span class="gradient-text">pisma prawne</span><br>
+                    w kilka minut
+                </h1>
+                <p class="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
+                    Twórz skuteczne dokumenty prawne z pomocą naszych ekspertów. 
+                    Szybko, bezpiecznie i w przystępnej cenie.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#pricing" class="btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-xl">
+                        Rozpocznij teraz
+                    </a>
+                    <a href="#how-it-works" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-slate-900 transition-all">
+                        Zobacz jak to działa
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2">5000+</div>
+                    <div class="text-slate-300">Zadowolonych klientów</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2">98%</div>
+                    <div class="text-slate-300">Skuteczność pism</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold gradient-text mb-2">24h</div>
+                    <div class="text-slate-300">Średni czas realizacji</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works" class="py-20" style="background-color: var(--bg-secondary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary);">
+                    Jak to <span class="gradient-text">działa</span>?
+                </h2>
+                <p class="text-xl" style="color: var(--text-secondary);">
+                    Prosty proces w 4 krokach
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center card-hover p-6 rounded-xl" style="background-color: var(--bg-tertiary);">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-white">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" style="color: var(--text-primary);">Wybierz pakiet</h3>
+                    <p style="color: var(--text-secondary);">Wybierz odpowiedni pakiet dla swojej sprawy</p>
+                </div>
+                
+                <div class="text-center card-hover p-6 rounded-xl" style="background-color: var(--bg-tertiary);">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-white">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" style="color: var(--text-primary);">Wypełnij formularz</h3>
+                    <p style="color: var(--text-secondary);">Podaj szczegóły swojej sprawy w prostym formularzu</p>
+                </div>
+                
+                <div class="text-center card-hover p-6 rounded-xl" style="background-color: var(--bg-tertiary);">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-white">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" style="color: var(--text-primary);">Ekspert tworzy pismo</h3>
+                    <p style="color: var(--text-secondary);">Nasz prawnik przygotowuje profesjonalne pismo</p>
+                </div>
+                
+                <div class="text-center card-hover p-6 rounded-xl" style="background-color: var(--bg-tertiary);">
+                    <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-white">4</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" style="color: var(--text-primary);">Otrzymujesz dokument</h3>
+                    <p style="color: var(--text-secondary);">Gotowe pismo trafia na Twój email</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-20" style="background-color: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Bezpieczeństwo danych</h3>
+                    <p style="color: var(--text-secondary);">Twoje dane są chronione najwyższymi standardami bezpieczeństwa. Używamy szyfrowania end-to-end.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Gwarancja terminowości</h3>
+                    <p style="color: var(--text-secondary);">Gwarantujemy dostarczenie dokumentu w uzgodnionym terminie lub zwracamy pieniądze.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary);">Wsparcie 24/7</h3>
+                    <p style="color: var(--text-secondary);">Nasz zespół techniczny jest dostępny przez całą dobę, aby pomóc Ci w każdej sytuacji.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-20" style="background-color: var(--bg-secondary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary);">
+                    Wybierz <span class="gradient-text">pakiet</span> dla siebie
+                </h2>
+                <p class="text-xl" style="color: var(--text-secondary);">
+                    Przejrzyste ceny, bez ukrytych kosztów
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- Express Package -->
+                <div class="card-hover p-8 rounded-2xl border-2 border-transparent hover:border-blue-500 transition-all" style="background-color: var(--bg-tertiary);">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">Express</h3>
+                        <div class="text-4xl font-bold gradient-text mb-4">99 zł</div>
+                        <p class="mb-6" style="color: var(--text-secondary);">Szybkie pisma standardowe</p>
+                        
+                        <ul class="text-left space-y-3 mb-8" style="color: var(--text-secondary);">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Realizacja do 24h
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Podstawowe pisma
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Email support
+                            </li>
+                        </ul>
+                        
+                        <button onclick="handleOrderClick('Express', 9900)" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">
+                            Wybierz Express
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Premium Package -->
+                <div class="card-hover p-8 rounded-2xl border-2 border-blue-500 relative" style="background-color: var(--bg-tertiary);">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Najpopularniejszy</span>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">Premium</h3>
+                        <div class="text-4xl font-bold gradient-text mb-4">199 zł</div>
+                        <p class="mb-6" style="color: var(--text-secondary);">Kompleksowe pisma prawne</p>
+                        
+                        <ul class="text-left space-y-3 mb-8" style="color: var(--text-secondary);">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Realizacja do 12h
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Zaawansowane pisma
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Konsultacja prawna
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Priorytetowe wsparcie
+                            </li>
+                        </ul>
+                        
+                        <button onclick="handleOrderClick('Premium', 19900)" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">
+                            Wybierz Premium
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Business Package -->
+                <div class="card-hover p-8 rounded-2xl border-2 border-transparent hover:border-purple-500 transition-all" style="background-color: var(--bg-tertiary);">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">Business</h3>
+                        <div class="text-4xl font-bold gradient-text mb-4">399 zł</div>
+                        <p class="mb-6" style="color: var(--text-secondary);">Dla firm i kancelarii</p>
+                        
+                        <ul class="text-left space-y-3 mb-8" style="color: var(--text-secondary);">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Realizacja do 6h
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Złożone pisma prawne
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Dedykowany prawnik
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Wsparcie telefoniczne
+                            </li>
+                        </ul>
+                        
+                        <button onclick="handleOrderClick('Business', 39900)" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">
+                            Wybierz Business
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Grants Package -->
+                <div class="card-hover p-8 rounded-2xl border-2 border-transparent hover:border-green-500 transition-all" style="background-color: var(--bg-tertiary);">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-2" style="color: var(--text-primary);">Dotacje</h3>
+                        <div class="text-4xl font-bold gradient-text mb-4">599 zł</div>
+                        <p class="mb-6" style="color: var(--text-secondary);">Specjalistyczne wnioski</p>
+                        
+                        <ul class="text-left space-y-3 mb-8" style="color: var(--text-secondary);">
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Realizacja do 48h
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Wnioski o dotacje
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Ekspert ds. dotacji
+                            </li>
+                            <li class="flex items-center">
+                                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Gwarancja jakości
+                            </li>
+                        </ul>
+                        
+                        <button onclick="handleOrderClick('Dotacje', 59900)" class="w-full btn-primary text-white py-3 rounded-lg font-semibold">
+                            Wybierz Dotacje
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Package Comparison Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full rounded-lg overflow-hidden" style="background-color: var(--bg-tertiary);">
+                    <thead style="background-color: var(--bg-primary);">
+                        <tr>
+                            <th class="px-6 py-4 text-left font-semibold" style="color: var(--text-primary);">Funkcja</th>
+                            <th class="px-6 py-4 text-center font-semibold" style="color: var(--text-primary);">Express</th>
+                            <th class="px-6 py-4 text-center font-semibold" style="color: var(--text-primary);">Premium</th>
+                            <th class="px-6 py-4 text-center font-semibold" style="color: var(--text-primary);">Business</th>
+                            <th class="px-6 py-4 text-center font-semibold" style="color: var(--text-primary);">Dotacje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-t" style="border-color: var(--border-color);">
+                            <td class="px-6 py-4" style="color: var(--text-secondary);">Czas realizacji</td>
+                            <td class="px-6 py-4 text-center" style="color: var(--text-secondary);">24h</td>
+                            <td class="px-6 py-4 text-center" style="color: var(--text-secondary);">12h</td>
+                            <td class="px-6 py-4 text-center" style="color: var(--text-secondary);">6h</td>
+                            <td class="px-6 py-4 text-center" style="color: var(--text-secondary);">48h</td>
+                        </tr>
+                        <tr class="border-t" style="border-color: var(--border-color);">
+                            <td class="px-6 py-4" style="color: var(--text-secondary);">Konsultacja prawna</td>
+                            <td class="px-6 py-4 text-center">❌</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                        </tr>
+                        <tr class="border-t" style="border-color: var(--border-color);">
+                            <td class="px-6 py-4" style="color: var(--text-secondary);">Dedykowany prawnik</td>
+                            <td class="px-6 py-4 text-center">❌</td>
+                            <td class="px-6 py-4 text-center">❌</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                        </tr>
+                        <tr class="border-t" style="border-color: var(--border-color);">
+                            <td class="px-6 py-4" style="color: var(--text-secondary);">Wsparcie telefoniczne</td>
+                            <td class="px-6 py-4 text-center">❌</td>
+                            <td class="px-6 py-4 text-center">❌</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                        </tr>
+                        <tr class="border-t" style="border-color: var(--border-color);">
+                            <td class="px-6 py-4" style="color: var(--text-secondary);">Gwarancja jakości</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                            <td class="px-6 py-4 text-center">✅</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicle Cases Section -->
+    <section id="vehicle-cases" class="py-20" style="background-color: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary);">
+                    Sprawy <span class="gradient-text">pojazdowe</span>
+                </h2>
+                <p class="text-xl" style="color: var(--text-secondary);">
+                    Specjalizujemy się w sprawach związanych z pojazdami
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-hover p-6 rounded-xl" style="background-color: var(--bg-secondary);">
+                    <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" style="color: var(--text-primary);">Odszkodowania komunikacyjne</h3>
+                    <p style="color: var(--text-secondary);">Pomożemy Ci uzyskać odszkodowanie za szkody powstałe w wyniku wypadku drogowego.</p>
+                    <button onclick="handleOrderClick('Odszkodowanie komunikacyjne', 19900, 'vehicle')" class="mt-4 btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        Zamów za 199 zł
+                    </button>
+                </div>
+                
+                <div class="card-hover p-6 rounded-xl" style="background-color: var(--bg-secondary);">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" style="color: var(--text-primary);">Odwołania od mandatów</h3>
+                    <p style="color: var(--text-secondary);">Profesjonalne odwołania od mandatów karnych i decyzji administracyjnych.</p>
+                    <button onclick="handleOrderClick('Odwołanie od mandatu', 14900, 'vehicle')" class="mt-4 btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        Zamów za 149 zł
+                    </button>
+                </div>
+                
+                <div class="card-hover p-6 rounded-xl" style="background-color: var(--bg-secondary);">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" style="color: var(--text-primary);">Sprawy ubezpieczeniowe</h3>
+                    <p style="color: var(--text-secondary);">Wsparcie w sporach z towarzystwami ubezpieczeniowymi dotyczących pojazdów.</p>
+                    <button onclick="handleOrderClick('Sprawa ubezpieczeniowa', 24900, 'vehicle')" class="mt-4 btn-primary text-white px-6 py-2 rounded-lg font-medium">
+                        Zamów za 249 zł
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grants Section -->
+    <section id="grants" class="py-20" style="background-color: var(--bg-secondary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary);">
+                    Wnioski o <span class="gradient-text">dotacje</span>
+                </h2>
+                <p class="text-xl" style="color: var(--text-secondary);">
+                    Pomożemy Ci uzyskać finansowanie dla Twojego projektu
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6" style="color: var(--text-primary);">Dlaczego warto skorzystać z naszej pomocy?</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold" style="color: var(--text-primary);">Doświadczenie</h4>
+                                <p style="color: var(--text-secondary);">Ponad 500 udanych wniosków o dotacje</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold" style="color: var(--text-primary);">Skuteczność</h4>
+                                <p style="color: var(--text-secondary);">85% naszych wniosków otrzymuje pozytywną decyzję</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-green-500 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold" style="color: var(--text-primary);">Kompleksowość</h4>
+                                <p style="color: var(--text-secondary);">Obsługujemy wszystkie rodzaje dotacji</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <button onclick="handleOrderClick('Wniosek o dotację', 59900, 'grant')" class="mt-8 btn-primary text-white px-8 py-3 rounded-lg font-semibold text-lg">
+                        Zamów wniosek za 599 zł
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-xl" style="background-color: var(--bg-tertiary);">
+                        <h4 class="font-semibold mb-2" style="color: var(--text-primary);">Dotacje unijne</h4>
+                        <p style="color: var(--text-secondary);">Fundusze strukturalne i inwestycyjne UE</p>
+                    </div>

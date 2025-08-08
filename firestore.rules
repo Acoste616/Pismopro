@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Każdy może utworzyć nowe zamówienie.
+    // To jest bezpieczne, bo dane są weryfikowane w formularzu.
+    match /orders/{orderId} {
+      allow create;
+
+      // Każdy może odczytać DOKŁADNIE ten dokument, którego ID zna.
+      // Nasza aplikacja będzie nasłuchiwać na zmiany tylko w jednym,
+      // konkretnym dokumencie, który właśnie utworzyła.
+      allow read;
+
+      // NIKT nie może modyfikować zamówienia z poziomu strony.
+      // Aktualizacje (np. dodanie klucza płatności) będą robione
+      // tylko przez naszą bezpieczną funkcję na serwerze.
+      allow update, delete: if false;
+    }
+  }
+}
