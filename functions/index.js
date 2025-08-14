@@ -80,6 +80,12 @@ exports.stripeWebhook = onRequest({ region: "europe-west1" }, async (req, res) =
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
+    // Simple HTML sanitizer
+    const sanitize = (str) => {
+        if (!str) return "";
+        return str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    };
+
     // Handle the event
     switch (event.type) {
         case "payment_intent.succeeded":
@@ -108,11 +114,11 @@ exports.stripeWebhook = onRequest({ region: "europe-west1" }, async (req, res) =
                 html: `
                     <h1>Nowe opłacone zamówienie!</h1>
                     <p><strong>ID Zamówienia:</strong> ${orderDoc.id}</p>
-                    <p><strong>Pakiet:</strong> ${orderData.plan}</p>
-                    <p><strong>Klient:</strong> ${orderData.fullName} (${orderData.customerEmail})</p>
-                    <p><strong>Typ sprawy:</strong> ${orderData.caseType}</p>
+                    <p><strong>Pakiet:</strong> ${sanitize(orderData.plan)}</p>
+                    <p><strong>Klient:</strong> ${sanitize(orderData.fullName)} (${sanitize(orderData.customerEmail)})</p>
+                    <p><strong>Typ sprawy:</strong> ${sanitize(orderData.caseType)}</p>
                     <p><strong>Opis:</strong></p>
-                    <p>${orderData.description}</p>
+                    <pre>${sanitize(orderData.description)}</pre>
                 `,
             };
 
@@ -127,7 +133,17 @@ exports.stripeWebhook = onRequest({ region: "europe-west1" }, async (req, res) =
         case "payment_intent.payment_failed":
             const failedPaymentIntent = event.data.object;
             console.log("Payment failed for:", failedPaymentIntent.id);
-            // Optionally, update the order status to "failed" in Firestore
+
+            // Find the order and update its status to "payment_failed"
+            const failedOrdersRef = admin.firestore().collection("orders");
+            const failedQuery = failedOrdersRef.where("paymentIntentId", "==", failedPaymentIntent.id);
+            const failedQuerySnapshot = await failedQuery.get();
+
+            if (!failedQuerySnapshot.empty) {
+                const failedOrderDoc = failedQuerySnapshot.docs[0];
+                await failedOrderDoc.ref.update({ status: "payment_failed" });
+                console.log(`Updated order ${failedOrderDoc.id} to payment_failed.`);
+            }
             break;
 
         default:
