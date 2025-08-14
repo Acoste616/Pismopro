@@ -1,19 +1,20 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Każdy może utworzyć nowe zamówienie.
-    // To jest bezpieczne, bo dane są weryfikowane w formularzu.
     match /orders/{orderId} {
-      allow create;
+      // Allow creation only if the data is valid and status is 'pending_payment'.
+      // This prevents users from creating already 'paid' orders or submitting invalid data.
+      allow create: if request.resource.data.status == 'pending_payment' &&
+                       request.resource.data.customerEmail is string &&
+                       request.resource.data.plan is string &&
+                       request.resource.data.amount is number;
 
-      // Każdy może odczytać DOKŁADNIE ten dokument, którego ID zna.
-      // Nasza aplikacja będzie nasłuchiwać na zmiany tylko w jednym,
-      // konkretnym dokumencie, który właśnie utworzyła.
-      allow read;
+      // Allow read only while payment is pending.
+      // Once the status changes (e.g., to 'paid'), the document is no longer readable by the client.
+      // This protects customer data in completed orders.
+      allow read: if resource.data.status == 'pending_payment';
 
-      // NIKT nie może modyfikować zamówienia z poziomu strony.
-      // Aktualizacje (np. dodanie klucza płatności) będą robione
-      // tylko przez naszą bezpieczną funkcję na serwerze.
+      // Updates and deletes are only allowed from the backend (server-side functions).
       allow update, delete: if false;
     }
   }
